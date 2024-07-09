@@ -10,6 +10,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import ProtectedRoutes from "./auth/components/ProtectedRoutes";
 import { useEffect } from "react";
+import Notfound from "./app/404";
 let Logout = ()=>{
   localStorage.clear()
   let navigate = useNavigate()
@@ -26,13 +27,14 @@ function App() {
        <div>
        <Routes>
           <Route path="/" element={<Home/>}></Route>
-          <Route path="category/products/:name/" element={<Products/>}></Route>
-          <Route path="/:id" element={<Product/>}></Route>
+          <Route path="category/:name/" element={<Products/>}></Route>
+          <Route exact path="category/:name/:id" element={<Product/>}></Route>
           <Route path="/cart/" element={<ProtectedRoutes><Cart/></ProtectedRoutes>}></Route>
           <Route path="wishlist/" element={<ProtectedRoutes><Wishlist/></ProtectedRoutes>}></Route>
           <Route path="login/" element={<Login/>}></Route>
           <Route path="register/" element={<Register/>}></Route>
           <Route path="/logout/" element={<Logout/>}></Route>
+          <Route path="*" element={<Notfound/>}></Route>
         </Routes>
        </div>
         <div><Footer/></div>

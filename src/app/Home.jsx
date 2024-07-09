@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../customhooks/UseFetch'
 import { Carousel } from 'flowbite-react'
@@ -8,26 +8,28 @@ import laptop from '../images/l3.jpg'
 import airdopes from '../images/b1.jpg'
 import watch from '../images/w1.jpg'
 import shirt from '../images/s4.jpg'
+// import laptop from '../images/laptop.png'
+// import carousel from '../images/carousel.png'
 const Home = () => {
-  let { data } = useFetch("http://127.0.0.1:8000/api/category/")
-  let { data: tproducts } = useFetch("http://127.0.0.1:8000/api/allproduct/")
+  let { data } = useFetch("http://13.48.43.42:8000/api/category/")
+  let { data: tproducts } = useFetch("http://13.48.43.42:8000/api/allproduct/")
   return (
     <>
-      <div className="flex flex-col space-y-10 my-10 -mb-[200px]">
+      <div className="flex flex-col space-y-10 my-10 -mb-[200px] mt-[100px] ">
         <div className="flex flex-row justify-around mx-[100px] ">
           {data.map((element) => {
-            return <Link to={`category/products/${element.name}/`} key={element.id} onClick={()=>localStorage.setItem('product_name', element.name)}>
+            return <Link to={`category/${element.name}/`} key={element.id} >
               <div className='flex flex-col  items-center'>
-                <div><img src={`http://127.0.0.1:8000/${element.image}`} className='w-[100px] h-[100px] hover:scale-105' alt=''></img></div>
+                <div><img src={`http://13.48.43.42:8000/${element.image}`} className='w-[100px] h-[100px] hover:scale-105 hover:transition-all' alt=''></img></div>
                 <div><p className='font-semibold'>{element.name}</p></div>
               </div>
             </Link>
           })}
         </div>
-        <div>
-          <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+        <div>   
+          <div className="h-[400px] sm:h-100 mb-[20px] overflow-hidden">
             <Carousel className='shadow-md'>
-              <img src={phone} alt="..." className='w-[400px] h-[400px]' />
+              <img src={phone} alt="..." className='w-[400px] h-[300px] ' />
               <img src={tv} alt="..." className='w-[600px] h-[400px]' />
               <img src={laptop} alt="..." className='w-[400px] h-[400px]' />
               <img src={airdopes} alt="..." className='w-[400px] h-[400px]' />
@@ -38,19 +40,18 @@ const Home = () => {
           </div>
 
         </div>
-
-        <div className='grid grid-rows-5 grid-cols-5 gap-[10px] mx-[50px] '>
+          <div className='grid grid-rows-5 grid-cols-5 gap-[10px] mx-[50px] '>
           {
             tproducts.map((element) => {
-              return <Link to={`/${element.id}`} key={element.id}>
-                <div className="flex flex-col space-y-4 items-center w-[250px] h-[300px] shadow-sm">
-                  <div><img src={`http://127.0.0.1:8000/${element.image}`} className='w-[150px] h-[150px]' alt="" /></div>
-                  <div className='text-center'>{element.name}</div>
+              return <Link to={`/category/${element.category}/${element.id}`} key={element.id}>
+                <div className="flex flex-col justify-between items-center w-[250px] h-[250px] shadow-lg ring-1 ring-gray-500 rounded-md hover:scale-105 hover:transition-all">
+                  <div><img src={`http://13.48.43.42:8000/${element.image}`} className='w-[150px] h-[150px] mt-[20px]' alt="" /></div>
+                  <div className='text-center text-[12px] w-full h-full rounded-b-md font-semibold font-sans text-balance bg-black text-white align-middle py-[10px] px-[5px] text-wrap overflow-hidden'>{element.name}</div>
                 </div>
               </Link>
             })
           }
-        </div>
+        </div> 
       </div>
     </>
   )

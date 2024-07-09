@@ -1,20 +1,17 @@
 
 import { Link } from 'react-router-dom'
 import { REFRESH_TOKEN } from '../auth/components/Constants'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect} from 'react'
 import { AuthContext } from '../createcontext'
 import { jwtDecode } from 'jwt-decode'
 const Header = () => {
-  // let jwt = jwtDecode(localStorage.getItem(REFRESH_TOKEN))
-  // console.log(jwt)
   const {isAuthenticated, setisAuthenticated} = useContext(AuthContext)
-  console.log(isAuthenticated)
   useEffect(()=>{
     let fetchdata = async ()=>{
         if(isAuthenticated){
           let jwt = jwtDecode(localStorage.getItem(REFRESH_TOKEN))
             try{
-              let response = await fetch('http://127.0.0.1:8000/auth/getuser/', 
+              let response = await fetch('http://13.48.43.42:8000/auth/getuser/', 
                 {method:'POST',
                   headers:{
                     'Content-Type':'application/json'
@@ -40,7 +37,7 @@ const Header = () => {
   
   return (
     <>
-       <div>
+       <div className='fixed w-full z-10'>
        <div className="flex flex-row bg-black text-white font-semibold py-4 h-[60px]">
         <div className='w-1/2'>
             <div className='flex flex-row justify-around'>

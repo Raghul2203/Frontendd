@@ -12,7 +12,7 @@ let ProtectedRoutes = ({children})=>{
     const refreshToken = async ()=>{
         const refreshToken = localStorage.getItem(REFRESH_TOKEN)
         try{
-            const res = await api.post("http://127.0.0.1:8000/auth/api/token/refresh/", {
+            const res = await api.post("http://13.48.43.42:8000/auth/api/token/refresh/", {
                 refresh : refreshToken})
             if (res.status === 200){
                 localStorage.setItem(ACCESS_TOKEN, res.data.access)
@@ -34,7 +34,7 @@ let ProtectedRoutes = ({children})=>{
         const decoded = jwtDecode(token)
         const tokenExpiration = decoded.exp
         const now = Date.now() / 1000
-        if(tokenExpiration < now){
+        if(tokenExpiration > now){
             await refreshToken()
         }
         else{
